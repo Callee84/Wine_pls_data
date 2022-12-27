@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 
     # my apps
     'comments',
+    'likes',
     'profiles',
     'posts',
 ]
