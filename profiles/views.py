@@ -1,5 +1,6 @@
 from django.db.models import Count
 from rest_framework import generics, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import WinePal
 from .serializers import WinePalSerializer
 from wnpls_data.permissions import IsOwnerOrReadOnly
@@ -14,6 +15,10 @@ class WinePalsList(generics.ListAPIView):
     serializer_class = WinePalSerializer
     filter_backends = [
         filters.OrderingFilter,
+        DjangoFilterBackend,
+    ]
+    filterset_fields = [
+        'owner__following__followed__winepal'
     ]
     ordering_fields = [
         'posts_count',
