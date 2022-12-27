@@ -3,13 +3,13 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
 
-class Post (models.Model):
+class Post(models.Model):
+    # model for creating posts
     wine_type_choices = [
         ('Red wine', 'Red wine'),
         ('White wine', 'White wine'),
         ('Sparkling wine', 'Sparkling wine'),
     ]
-    # model for creating posts
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
