@@ -1,43 +1,38 @@
-from django.http import Http404
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from django.db.models import Count
+from rest_framework import generics, filters
 from .models import WinePal
 from .serializers import WinePalSerializer
 from wnpls_data.permissions import IsOwnerOrReadOnly
 
 
-class WinePalsList(APIView):
-    def get(self, request):
-        winepals = WinePal.objects.all()
-        serializer = WinePalSerializer(
-            winepals, many=True, context={'request': request})
-        return Response(serializer.data)
-
-
-class WinePalDetails(APIView):
+class WinePalsList(generics.ListAPIView):
+    queryset = WinePal.objects.annotate(
+        posts_count=Count('owner__post', distinct=True),
+        followers_count=Count('owner__followed', distinct=True),
+        following_count=Count('owner__following', distinct=True)
+        ).order_by('-created_on')
     serializer_class = WinePalSerializer
+    filter_backends = [
+        filters.OrderingFilter,
+    ]
+    ordering_fields = [
+        'posts_count',
+        'followers_count',
+        'following_count',
+        'owner__followed__created_on',
+        'owner__following__created_on'
+    ]
+
+
+class WinePalDetails(generics.RetrieveUpdateAPIView):
+    """
+    Retrieve or update a profile if you're the owner.
+    """
     permission_classes = [IsOwnerOrReadOnly]
-
-    def get_object(self, pk):
-        try:
-            winepal = WinePal.objects.get(pk=pk)
-            self.check_object_permissions(self.request, winepal)
-            return winepal
-        except WinePal.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk):
-        winepal = self.get_object(pk)
-        serializer = WinePalSerializer(
-            winepal, context={'request': request})
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        winepal = self.get_object(pk)
-        serializer = WinePalSerializer(
-            winepal, data=request.data, context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_404_BAD_REQUEST)
+    queryset = WinePal.objects.all()
+    serializer_class = WinePalSerializer
+    queryset = WinePal.objects.annotate(
+        posts_count=Count('owner__post', distinct=True),
+        followers_count=Count('owner__followed', distinct=True),
+        following_count=Count('owner__following', distinct=True)
+        ).order_by('-created_on')
