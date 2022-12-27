@@ -18,7 +18,8 @@ class WinePalsList(generics.ListAPIView):
         DjangoFilterBackend,
     ]
     filterset_fields = [
-        'owner__following__followed__winepal'
+        'owner__following__followed__winepal',
+        'owner__followed__owner__winepal',
     ]
     ordering_fields = [
         'posts_count',
