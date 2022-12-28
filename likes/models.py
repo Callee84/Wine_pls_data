@@ -4,7 +4,7 @@ from posts.models import Post
 
 
 class Likes(models.Model):
-    # model for liking posts
+    # model for liking posts and wine
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(
         Post, related_name='likes', on_delete=models.CASCADE)
