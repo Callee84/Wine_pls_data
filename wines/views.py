@@ -12,7 +12,9 @@ class WineList(generics.ListCreateAPIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
-    queryset = Wine.objects.all()
+    queryset = Wine.objects.annotate(
+        comments_count=Count('commentwine', distinct=True)
+    )
     filter_backends = [
         filters.OrderingFilter,
         filters.SearchFilter,
@@ -29,3 +31,11 @@ class WineList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class WineDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = WineSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+    queryset = Wine.objects.annotate(
+        comments_count=Count('commentwine', distinct=True)
+    )

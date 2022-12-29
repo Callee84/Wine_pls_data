@@ -40,7 +40,7 @@ class PostList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class PostDetail(APIView):
+class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Post.objects.annotate(
