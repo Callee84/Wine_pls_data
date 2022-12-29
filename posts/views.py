@@ -7,7 +7,7 @@ from .serializers import PostSerializer
 from wnpls_data.permissions import IsOwnerOrReadOnly
 
 
-class PostList(generics.ListAPIView):
+class PostList(generics.ListCreateAPIView):
     serializer_class = PostSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly

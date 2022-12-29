@@ -26,3 +26,6 @@ class WineList(generics.ListAPIView):
         'name',
         'producer',
     ]
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
