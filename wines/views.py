@@ -7,7 +7,7 @@ from .serializers import WineSerializer
 from wnpls_data.permissions import IsOwnerOrReadOnly
 
 
-class WineList(generics.ListAPIView):
+class WineList(generics.ListCreateAPIView):
     serializer_class = WineSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
