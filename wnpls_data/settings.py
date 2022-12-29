@@ -61,7 +61,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEV'
 
-ALLOWED_HOSTS = ['localhost', 'https://winerypals.herokuapp.com/']
+ALLOWED_HOSTS = ['localhost', 'winerypals.herokuapp.com']
 
 
 # Application definition
