@@ -9,7 +9,7 @@ from .settings import (
 @api_view()
 def root_route(request):
     return Response({
-        'Message': 'Welcome to Winepals'
+        'Message': 'Welcome to Winerypals'
     })
 
 
