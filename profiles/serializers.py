@@ -28,6 +28,6 @@ class WinePalSerializer(serializers.ModelSerializer):
         model = WinePal
         fields = [
             'id', 'owner', 'created_on', 'updated_on', 'name',
-            'bio', 'img', 'is_owner', 'following_id',
+            'bio', 'profile_image', 'is_owner', 'following_id',
             'posts_count', 'followers_count', 'following_count'
         ]

@@ -8,7 +8,7 @@ class WinePal(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, blank=True)
     bio = models.TextField(blank=True)
-    img = models.ImageField(
+    profile_image = models.ImageField(
         upload_to='images/', default='../default_user_p5nq8r'
     )
     created_on = models.DateTimeField(auto_now_add=True)
